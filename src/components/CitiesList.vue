@@ -24,6 +24,7 @@ export default {
                               )
                          );
                     });
+                    await new Promise((res) => setTimeout(res, 1300));
                     const weatherData = await Promise.all(requests);
                     weatherData.forEach((value, index) => {
                          tempCities[index].weather = value.data;
@@ -47,6 +48,7 @@ export default {
                });
           },
      },
+
      mounted() {
           this.getCities();
      },
@@ -59,7 +61,6 @@ export default {
           in the field above
      </p>
      <CityCard
-          v-else
           v-for="city in this.savedCities"
           :key="city.id"
           :city="city"

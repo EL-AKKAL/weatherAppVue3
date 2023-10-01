@@ -3,7 +3,7 @@
           <Suspense>
                <AsyncCityView />
                <template #fallback>
-                    <p>loading...</p>
+                    <CityViewRenderAnimation />
                </template>
           </Suspense>
      </div>
@@ -11,11 +11,13 @@
 
 <script>
 import AsyncCityView from "../components/AsyncCityView.vue";
+import CityViewRenderAnimation from "../components/CityViewRenderAnimation.vue";
 
 export default {
      name: "CityView",
      components: {
           AsyncCityView,
+          CityViewRenderAnimation,
      },
 };
 </script>

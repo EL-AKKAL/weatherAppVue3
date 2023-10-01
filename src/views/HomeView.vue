@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useRouter } from "vue-router";
 import CitiesList from "../components/CitiesList.vue";
+import CityCardRenderAnimation from "../components/CityCardRenderAnimation.vue";
 export default {
      data() {
           return {
@@ -60,6 +61,7 @@ export default {
      },
      components: {
           CitiesList,
+          CityCardRenderAnimation,
      },
 };
 </script>
@@ -77,7 +79,7 @@ export default {
 
                <ul
                     v-if="this.searchValue != ''"
-                    class="w-full absolute bg-transparent text-textColor py-2 px-1 top-[65px] left-0"
+                    class="w-full absolute bg-bgColor text-textColor py-2 px-1 top-[65px] left-0"
                >
                     <li
                          v-if="this.errorMessage"
@@ -116,7 +118,7 @@ export default {
                     <Suspense>
                          <CitiesList />
                          <template #fallback>
-                              <p>loading...</p>
+                              <CityCardRenderAnimation />
                          </template>
                     </Suspense>
                </div>
