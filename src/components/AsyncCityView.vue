@@ -71,7 +71,6 @@ const WeatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?q=${route
 
 const getCityWeather = async () => {
      try {
-          console.log(WeatherAPIUrl);
           const result = await axios.get(WeatherAPIUrl);
           return result.data;
      } catch (error) {

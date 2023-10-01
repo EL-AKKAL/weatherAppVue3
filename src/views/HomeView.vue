@@ -36,7 +36,6 @@ export default {
                     try {
                          const response = await axios.request(options);
                          this.cities = response.data.data;
-                         console.log(response.data.data);
                     } catch (error) {
                          this.errorMessage = true;
                          this.cities = null;

@@ -30,7 +30,6 @@ export default {
                          tempCities[index].weather = value.data;
                     });
                     this.savedCities = tempCities;
-                    console.log(this.savedCities);
                }
           },
           goToCityView(city) {

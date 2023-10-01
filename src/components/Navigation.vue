@@ -91,7 +91,6 @@ export default {
      },
      methods: {
           closeIt() {
-               console.log("ss");
                this.modalActive = !this.modalActive;
           },
           addCityToFavorite() {
@@ -114,7 +113,6 @@ export default {
                delete query.preview;
                query.id = cityToAdd.id;
                this.router.replace({ query });
-               console.log("added");
           },
      },
 };
