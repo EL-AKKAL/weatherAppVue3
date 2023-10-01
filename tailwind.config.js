@@ -7,8 +7,6 @@ module.exports = {
                     bgColor: "#00668A",
                     secondaryColor: "#0a3543",
                     textColor: "#eef4f6",
-                    accentColor: "#65509f",
-                    yellowColor: "#FDDA0D",
                },
           },
           fontFamily: {

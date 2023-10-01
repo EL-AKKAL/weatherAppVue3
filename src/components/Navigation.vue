@@ -16,6 +16,8 @@
                          class="fa-solid fa-circle-info text-xl hover:text-secondaryColor cursor-pointer transition duration-150"
                     ></i>
                     <i
+                         @click="addCityToFavorite"
+                         v-if="this.route.query.preview"
                          class="fa-solid fa-circle-plus text-xl hover:text-secondaryColor cursor-pointer transition duration-150"
                     ></i>
                </div>
@@ -70,14 +72,18 @@
 </template>
 
 <script>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 import HowItWorks from "./HowItWorks.vue";
+import { uid } from "uid";
 
 export default {
      name: "Navigation",
      data() {
           return {
                modalActive: false,
+               savedCities: [],
+               route: useRoute(),
+               router: useRouter(),
           };
      },
      components: {
@@ -87,6 +93,28 @@ export default {
           closeIt() {
                console.log("ss");
                this.modalActive = !this.modalActive;
+          },
+          addCityToFavorite() {
+               if (localStorage.getItem("savedCities")) {
+                    this.savedCities = JSON.parse(
+                         localStorage.getItem("savedCities")
+                    );
+               }
+               const cityToAdd = {
+                    id: uid(),
+                    country: this.route.params.country,
+                    city: this.route.params.city,
+               };
+               this.savedCities.push(cityToAdd);
+               localStorage.setItem(
+                    "savedCities",
+                    JSON.stringify(this.savedCities)
+               );
+               let query = Object.assign({}, this.route.query);
+               delete query.preview;
+               query.id = cityToAdd.id;
+               this.router.replace({ query });
+               console.log("added");
           },
      },
 };
