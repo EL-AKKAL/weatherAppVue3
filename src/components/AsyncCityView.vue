@@ -1,5 +1,8 @@
 <template>
-     <div class="flex flex-col flex-1 items-center">
+     <div
+          v-if="cityWeatherData !== null && !error"
+          class="flex flex-col flex-1 items-center"
+     >
           <p
                v-if="route.query.preview"
                class="capitalize text-textColor text-center w-full bg-secondaryColor/50 p-4"
@@ -31,7 +34,7 @@
                     </ul>
                     <img
                          class="w-[150px] h-auto"
-                         :src="`https://openweathermap.org/img/wn/${cityWeatherData.weather[0].icon}@2x.png`"
+                         :src="`https://openweathermap.org/img/wn/${cityWeatherData?.weather[0].icon}@2x.png`"
                          alt=""
                     />
                </div>
@@ -58,27 +61,39 @@
                Remove City
           </button>
      </div>
+     <div v-else class="container mt-5 text-textColor font-bold text-xl">
+          <h1>
+               This city doesn't exist in our database , please try another one
+          </h1>
+          <router-link
+               class="mt-5 block font-medium border w-fit px-3 py-2 rounded-lg transition-all duration-150 hover:text-gray-300 border-textColor"
+               :to="{ name: 'home' }"
+               >Back Home</router-link
+          >
+     </div>
 </template>
 
 <script setup>
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
-
+import { ref } from "vue";
 const route = useRoute();
 const router = useRouter();
 const WeatherAPIKey = "dfbecde9c7ca1faa36ed29f04d911f0e";
 const WeatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?q=${route.query.city}&appid=${WeatherAPIKey}&units=metric`;
 
+const error = ref(false);
+let cityWeatherData = ref(null);
 const getCityWeather = async () => {
      try {
           const result = await axios.get(WeatherAPIUrl);
-          return result.data;
+          cityWeatherData.value = result.data;
      } catch (error) {
-          console.log(error);
+          error.value = true;
      }
 };
 
-const cityWeatherData = await getCityWeather();
+getCityWeather();
 const removeCity = () => {
      const cities = JSON.parse(localStorage.getItem("savedCities"));
      const updatedCities = cities.filter((city) => city.id !== route.query.id);
